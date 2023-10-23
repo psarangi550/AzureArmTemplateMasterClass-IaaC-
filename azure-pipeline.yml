@@ -1,0 +1,13 @@
+trigger:
+  - main 
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    # Fetch the Git tag associated with the last commit.
+    GIT_TAG=$(git describe --tags --abbrev=0 HEAD)
+
+    echo "Git Tag associated with the last commit: $GIT_TAG"
+  displayName: 'Fetch Git Tag for Last Commit'
