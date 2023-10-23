@@ -1,13 +1,20 @@
 trigger:
-  - main 
+  - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  - group: 'TTUserApplication'
+
+
 steps:
 - script: |
-    # Fetch the Git tag associated with the last commit.
-    GIT_TAG=$(git describe --tags --abbrev=0 HEAD)
-
-    echo "Git Tag associated with the last commit: $GIT_TAG"
-  displayName: 'Fetch Git Tag for Last Commit'
+    MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
+    if [ -z "$MindSphereOSbar_appVersion" ]; then
+        MindSphereOSbar_appVersion=$(VersionTag2)
+    fi
+    echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
+    PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
+    echo $PR_Number
+  displayName: 'Build Info tag'
