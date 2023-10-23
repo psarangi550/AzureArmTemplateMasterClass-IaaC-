@@ -41,7 +41,7 @@ stages:
           - powershell: |
               $MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
               if (-not $MindSphereOSbar_appVersion) {
-                  $MindSphereOSbar_appVersion = $env.VersionTag2
+                  $MindSphereOSbar_appVersion = "$VersionTag2"
               }
               echo $MindSphereOSbar_appVersion
             displayName: Updating MindsphereOSbarConfig File
