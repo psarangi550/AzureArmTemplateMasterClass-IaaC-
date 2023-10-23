@@ -10,7 +10,7 @@ variables:
 
 steps:
 - script: |
-    MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
+    MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0)
     if [ -z "$MindSphereOSbar_appVersion" ]; then
         MindSphereOSbar_appVersion=$(VersionTag2)
     fi
