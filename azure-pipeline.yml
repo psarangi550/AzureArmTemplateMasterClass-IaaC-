@@ -39,9 +39,13 @@ stages:
         steps:
 
           - powershell: |
-              $MindSphereOSbar_appVersion= git describe --tags --abbrev=0
+              $MindSphereOSbar_appVersion= git describe --tags --abbrev=0 2>$null
               
-              Write-Host $VersionTag2
+              if ($LASTEXITCODE -eq 0) {
+                Write-Host "Latest Git tag: $latestTag"
+                } else {
+                    Write-Host "No Git tags found."
+                }
               
               # if (-not $MindSphereOSbar_appVersion) {
               #     $MindSphereOSbar_appVersion = "$VersionTag2"
