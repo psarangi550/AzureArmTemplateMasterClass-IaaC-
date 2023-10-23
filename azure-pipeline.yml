@@ -9,6 +9,8 @@ variables:
 
 
 stages:
+  
+  
   - stage: setVariableStage
     jobs:
       - job: setVariableJob
@@ -38,11 +40,14 @@ stages:
 
 
           - script: |
+              
               MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
-              if [ -z "$MindSphereOSbar_appVersion" ]; then
-                  MindSphereOSbar_appVersion=$(VersionTag2)
-              fi
-              echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
-              PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
-              echo $PR_Number
+              echo $MindSphereOSbar_appVersion
+              
+              # if [ -z "$MindSphereOSbar_appVersion" ]; then
+              #     MindSphereOSbar_appVersion=$(VersionTag2)
+              # fi
+              # echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
+              # PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
+              # echo $PR_Number
             displayName: 'Build Info tag'
