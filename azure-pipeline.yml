@@ -37,6 +37,14 @@ stages:
         variables:
           incrementNo: $[counter(format('{0:dd}', pipeline.startTime), 1)]
         steps:
+
+          - powershell: |
+              $MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
+              if (-not $MindSphereOSbar_appVersion) {
+                  $MindSphereOSbar_appVersion = $(VersionTag2)
+              }
+              echo $MindSphereOSbar_appVersion
+            displayName: Updating MindsphereOSbarConfig File
           
           - script: |
               DATE=$(date '+%Y%m%d')
@@ -44,18 +52,12 @@ stages:
               echo "##vso[task.setvariable variable=CURRENT_DATE;isOutput=true]$DATE"
             name: SetDate
 
-
-          - script: |
-              
+          - script: |              
               MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0)
-              
               if [ -z "$MindSphereOSbar_appVersion" ]; then
                   MindSphereOSbar_appVersion=$(VersionTag2)
               fi
-              
               echo $MindSphereOSbar_appVersion
-
-
               # echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
               # PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
               # echo $PR_Number
