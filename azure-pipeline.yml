@@ -39,8 +39,10 @@ stages:
         steps:
 
           - powershell: |
-              $MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
+              $MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0)
+              
               Write-Host $VersionTag2
+              
               # if (-not $MindSphereOSbar_appVersion) {
               #     $MindSphereOSbar_appVersion = "$VersionTag2"
               # }
