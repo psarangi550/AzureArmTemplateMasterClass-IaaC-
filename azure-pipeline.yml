@@ -1,5 +1,12 @@
 trigger:
-  - master
+  
+  branches:
+    include:
+      - main
+
+  tags:
+    include:
+      - v*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -9,7 +16,6 @@ variables:
 
 
 stages:
-  
   
   - stage: setVariableStage
     jobs:
