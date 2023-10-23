@@ -41,13 +41,14 @@ stages:
 
           - script: |
               
-              MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0 HEAD)
+              MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0)
               
               if [ -z "$MindSphereOSbar_appVersion" ]; then
                   MindSphereOSbar_appVersion=$(VersionTag2)
               fi
               
               echo $MindSphereOSbar_appVersion
+
 
               # echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
               # PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
