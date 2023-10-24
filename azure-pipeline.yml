@@ -6,7 +6,9 @@ trigger:
      
 pool:
   name: 'myvmssagent'
-        
+
+
+    
 jobs:
 
 - job: Job1
