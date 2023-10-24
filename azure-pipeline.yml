@@ -3,69 +3,24 @@ trigger:
   branches:
     include:
       - master
-
-  tags:
-    include:
-      - v*
-
+     
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'myvmssagent'
+        
+jobs:
 
-variables:
-  - group: 'TTUserApplication'
+- job: Job1
+  steps:
+    - script: echo Hello, $HOSTNAME
 
+- job: Job2
+  steps:
+    - script: echo Hello, $HOSTNAME
 
-stages:
-  
-  - stage: setVariableStage
-    jobs:
-      - job: setVariableJob
-        steps:
-          - script: |
-              echo "Setting commitMessage variable"
-              echo "##vso[task.setvariable variable=commitMessage;isOutput=true]$(Build.SourceVersionMessage)"
-            name: commitMessageName
-          - script: echo "The commitMessage is \"$(commitMessageName.commitMessage)\""
-            name: echovar
+- job: Job3
+  steps:
+    - script: echo Hello, $HOSTNAME
 
-
-  - stage: Build_QA_Dev
-    displayName: Build_QA_Dev
-    jobs:
-      - job: Build_QA_Dev
-        displayName: Build_QA_Dev
-        variables:
-          incrementNo: $[counter(format('{0:dd}', pipeline.startTime), 1)]
-        steps:
-
-          - powershell: |
-              $MindSphereOSbar_appVersion= git describe --tags --abbrev=0 2>$null
-              
-              if ($LASTEXITCODE -eq 0) {
-                Write-Host "Latest Git tag: $latestTag"
-                } else {
-                    Write-Host "No Git tags found."
-                }
-              
-              # if (-not $MindSphereOSbar_appVersion) {
-              #     $MindSphereOSbar_appVersion = "$VersionTag2"
-              # }
-              # echo $MindSphereOSbar_appVersion
-            displayName: Updating MindsphereOSbarConfig File
-          
-          - script: |
-              DATE=$(date '+%Y%m%d')
-              echo $DATE
-              echo "##vso[task.setvariable variable=CURRENT_DATE;isOutput=true]$DATE"
-            name: SetDate
-
-          - script: |              
-              MindSphereOSbar_appVersion=$(git describe --tags --abbrev=0)
-              if [ -z "$MindSphereOSbar_appVersion" ]; then
-                  MindSphereOSbar_appVersion=$(VersionTag2)
-              fi
-              echo $MindSphereOSbar_appVersion
-              # echo "$(MindSphereOSbar_appVersion)_$(SetDate.CURRENT_DATE).$(incrementNo)" > $(Pipeline.Workspace)/buildtaginfo.txt
-              # PR_Number= cat $(Pipeline.Workspace)/buildtaginfo.txt
-              # echo $PR_Number
-            displayName: 'Build Info tag'
+- job: Job4
+  steps:
+    - script: echo Hello, $HOSTNAME
